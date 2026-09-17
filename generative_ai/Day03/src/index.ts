@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
-import { summarizeTicket } from "./summarizeService.ts";
+import { summarizeTicket } from "./summarizeService.js";
+
 
 const app = express();
 
