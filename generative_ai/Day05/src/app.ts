@@ -28,16 +28,14 @@ app.post("/api/chat", async (req, res) => {
 app.post("/api/generate-website", async (req, res) => {
   try {
     const text = req.body;
-
-    if (!text) {
-      throw new Error("message is required");
+    if (!text || typeof text !== "string") {
+      return res.status(400).send("message is required");
     }
-
     const result = await generateWebsite(text);
-
     res.send(result);
-  } catch (error: any) {
-    res.status(500).send(error.message);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    res.status(500).send(message);
   }
 });
 
