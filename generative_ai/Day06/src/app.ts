@@ -1,10 +1,15 @@
 import express, { Request, Response } from "express";
-import { chatService } from "./chat.js";
+import { ChatController } from "./chatController";
+import { ChatService } from "./chatService";
+
 
 
 const app = express();
 
 app.use(express.text())
+
+const chatService = new ChatService();
+const chatController = new ChatController(chatService);
 
 app.post("/api/chat", async (req: Request, res: Response) => {
 
@@ -16,7 +21,7 @@ app.post("/api/chat", async (req: Request, res: Response) => {
   }
 
   try {
-    const result = await chatService(req.body);
+    const result = await chatController.chat(req.body);
 
     return res.status(200).send(result)
   } catch (e: any) {
